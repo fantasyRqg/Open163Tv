@@ -1,6 +1,6 @@
 package rqg.fantasy.open163.tv.model
 
-data class OpenClass(
+data class MovieItem(
         val includeVirtual: String? = null,
         val description: String? = null,
         val source: String? = null,
