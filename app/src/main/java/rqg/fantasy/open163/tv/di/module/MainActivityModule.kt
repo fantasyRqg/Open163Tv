@@ -3,11 +3,12 @@ package rqg.fantasy.open163.tv.di.module
 import android.app.Activity
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.android.ActivityKey
 import dagger.android.AndroidInjector
 import dagger.multibindings.IntoMap
 import rqg.fantasy.open163.tv.business.main.MainActivity
+import rqg.fantasy.open163.tv.business.main.MainContract
+import rqg.fantasy.open163.tv.business.main.MainPresenterImpl
 import rqg.fantasy.open163.tv.di.component.MainActivitySubComponent
 
 
@@ -16,7 +17,7 @@ import rqg.fantasy.open163.tv.di.component.MainActivitySubComponent
  */
 
 @Module(subcomponents = arrayOf(MainActivitySubComponent::class))
-abstract class MainActivityModule(val mainActivity: MainActivity) {
+abstract class MainActivityModule {
 
     @Binds
     @IntoMap
@@ -24,8 +25,10 @@ abstract class MainActivityModule(val mainActivity: MainActivity) {
     internal abstract fun bindMainActivityInjectorFactory(builder: MainActivitySubComponent.Builder): AndroidInjector.Factory<out Activity>
 
 
-    @Provides
-    fun provideView() = mainActivity
+    @Binds
+    abstract fun bindMainPresenter(mainPresenterImpl: MainPresenterImpl): MainContract.Presenter
 
+    @Binds
+    abstract fun bindMainView(mainActivity: MainActivity): MainContract.View
 
 }

@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class MainPresenter @Inject constructor(view: MainContract.View) : MainContract.Presenter {
+class MainPresenterImpl @Inject constructor(view: MainContract.View) : MainContract.Presenter {
 
     private data class PlayListItem(val mCname: String, val mMovieList: List<MovieItem>)
 
