@@ -22,8 +22,7 @@ abstract class MainActivityModule {
     @Binds
     @IntoMap
     @ActivityKey(MainActivity::class)
-    internal abstract fun bindMainActivityInjectorFactory(builder: MainActivitySubComponent.Builder): AndroidInjector.Factory<out Activity>
-
+    abstract fun bindMainActivityInjectorFactory(builder: MainActivitySubComponent.Builder): AndroidInjector.Factory<Activity>
 
     @Binds
     abstract fun bindMainPresenter(mainPresenterImpl: MainPresenterImpl): MainContract.Presenter

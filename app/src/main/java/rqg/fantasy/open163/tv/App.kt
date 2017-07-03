@@ -28,6 +28,7 @@ class App : Application(), HasActivityInjector {
                 .build()
     }
 
+
     override fun onCreate() {
         super.onCreate()
         component.inject(this)
