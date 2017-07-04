@@ -1,14 +1,15 @@
-package rqg.fantasy.open163.tv.di.component
+package rqg.fantasy.open163.tv.business.main
 
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
-import rqg.fantasy.open163.tv.business.main.MainActivity
+import rqg.fantasy.open163.tv.ActivityScope
 
 /**
  * Created by rqg on 03/07/2017.
  */
 
-@Subcomponent
+@ActivityScope
+@Subcomponent(modules = arrayOf(MainActivityModule::class))
 interface MainActivitySubComponent : AndroidInjector<MainActivity> {
     @Subcomponent.Builder
     abstract class Builder : AndroidInjector.Builder<MainActivity>()

@@ -1,15 +1,15 @@
 package rqg.fantasy.open163.tv.business.main
 
+import rqg.fantasy.open163.tv.ActivityScope
 import rqg.fantasy.open163.tv.model.MovieItem
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by rqg on 02/07/2017.
  */
 
 
-@Singleton
+@ActivityScope
 class MainPresenterImpl @Inject constructor(view: MainContract.View) : MainContract.Presenter {
 
     private data class PlayListItem(val mCname: String, val mMovieList: List<MovieItem>)
