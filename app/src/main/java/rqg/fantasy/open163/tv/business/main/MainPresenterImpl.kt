@@ -1,5 +1,6 @@
 package rqg.fantasy.open163.tv.business.main
 
+import android.util.Log
 import rqg.fantasy.open163.tv.ActivityScope
 import rqg.fantasy.open163.tv.model.MovieItem
 import javax.inject.Inject
@@ -14,11 +15,12 @@ class MainPresenterImpl @Inject constructor(view: MainContract.View) : MainContr
 
     private data class PlayListItem(val mCname: String, val mMovieList: List<MovieItem>)
 
+    val TAG = "MainPresenterImpl"
 
     private val mPlayTable: List<PlayListItem> = mutableListOf()
 
     override fun start() {
-
+        Log.d(TAG, "start() called")
     }
 
     override fun loadTypeContent(index: Int): List<MovieItem> {

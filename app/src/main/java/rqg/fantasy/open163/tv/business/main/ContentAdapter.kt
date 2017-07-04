@@ -33,7 +33,7 @@ class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return mMovieList.size
     }
 
 
