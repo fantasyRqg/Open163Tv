@@ -11,9 +11,9 @@ import rqg.fantasy.open163.tv.model.MovieItem
 
 interface MainContract {
     interface Presenter : BasePresenter {
-        fun loadTypeContent(index: Int): List<MovieItem>
+        fun loadTypeContent(key: String)
 
-        fun search(word: String): List<MovieItem>
+        fun search(word: String)
 
 
     }

@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import rqg.fantasy.open163.tv.App
 import rqg.fantasy.open163.tv.BaseActivity
 import rqg.fantasy.open163.tv.R
 import rqg.fantasy.open163.tv.model.MovieItem
@@ -18,6 +19,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     lateinit var mMenuAdapter: MenuAdapter
     lateinit var mContentAdapter: ContentAdapter
     @Inject lateinit var mPresenter: MainContract.Presenter
+    @Inject lateinit var mApp: App
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -29,7 +31,9 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     private fun initView() {
-        mMenuAdapter = MenuAdapter()
+        mMenuAdapter = MenuAdapter {
+            mPresenter.loadTypeContent(it)
+        }
         mContentAdapter = ContentAdapter()
 
 

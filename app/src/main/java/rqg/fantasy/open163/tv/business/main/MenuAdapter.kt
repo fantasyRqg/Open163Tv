@@ -12,7 +12,7 @@ import rqg.fantasy.open163.tv.R
  */
 
 
-class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
+class MenuAdapter(inline val menuClick: (String) -> Unit) : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
     var mCnameList: List<String> = listOf()
         set(value) {
             field = value
@@ -27,6 +27,11 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
 
     override fun onBindViewHolder(holder: MenuHolder?, position: Int) {
         holder?.cnameView?.text = mCnameList[position]
+        holder?.cnameView?.setOnClickListener {
+            holder.cnameView?.text?.let {
+                menuClick.invoke(it.toString())
+            }
+        }
     }
 
     override fun getItemCount(): Int {

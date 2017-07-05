@@ -2,6 +2,7 @@ package rqg.fantasy.open163.tv
 
 import android.app.Activity
 import android.app.Application
+import com.facebook.drawee.backends.pipeline.Fresco
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import rqg.fantasy.open163.tv.di.component.AppComponent
@@ -32,5 +33,7 @@ class App : Application(), HasActivityInjector {
     override fun onCreate() {
         super.onCreate()
         component.inject(this)
+
+        Fresco.initialize(this)
     }
 }

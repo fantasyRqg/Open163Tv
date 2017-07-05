@@ -5,6 +5,8 @@ import dagger.android.AndroidInjectionModule
 import rqg.fantasy.open163.tv.App
 import rqg.fantasy.open163.tv.di.module.AppModule
 import rqg.fantasy.open163.tv.di.module.BuildersModule
+import rqg.fantasy.open163.tv.di.module.NetworkModule
+import rqg.fantasy.open163.tv.di.module.Open163Module
 import javax.inject.Singleton
 
 /**
@@ -12,7 +14,11 @@ import javax.inject.Singleton
  */
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class, AndroidInjectionModule::class, BuildersModule::class))
+@Component(modules = arrayOf(AppModule::class,
+        AndroidInjectionModule::class,
+        Open163Module::class,
+        NetworkModule::class,
+        BuildersModule::class))
 interface AppComponent {
     fun inject(app: App)
 }
