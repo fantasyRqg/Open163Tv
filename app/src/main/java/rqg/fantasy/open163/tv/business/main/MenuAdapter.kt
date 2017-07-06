@@ -19,6 +19,8 @@ class MenuAdapter(inline val menuClick: (String) -> Unit) : RecyclerView.Adapter
             notifyDataSetChanged()
         }
 
+    var requestFocustOnFirst = false
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MenuHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_play_menu, parent, false)
 
@@ -31,6 +33,11 @@ class MenuAdapter(inline val menuClick: (String) -> Unit) : RecyclerView.Adapter
             holder.cnameView?.text?.let {
                 menuClick.invoke(it.toString())
             }
+        }
+
+
+        if (position == 0 && requestFocustOnFirst) {
+            holder?.itemView?.requestFocus()
         }
     }
 
