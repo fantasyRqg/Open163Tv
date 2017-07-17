@@ -1,5 +1,6 @@
 package rqg.fantasy.open163.tv.business.main
 
+import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import rqg.fantasy.open163.tv.ActivityScope
@@ -59,7 +60,9 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
     }
 
     override fun loadTypeContent(key: String) {
+        Log.d(TAG, "loadTypeContent() called with: key = [ $key ]")
         mPlayTable[key]?.let {
+            Log.d(TAG, "loadTypeContent: size = " + it.size)
             mView.showMovieList(it)
         }
     }

@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import rqg.fantasy.open163.tv.App
@@ -50,22 +49,35 @@ class MainActivity : BaseActivity(), MainContract.View {
         content_list.adapter = mContentAdapter
         content_list.layoutManager = GridLayoutManager(this, 4)
         content_list.setHasFixedSize(true)
+
+        mMenuAdapter.showHighLight = true
     }
 
     override fun showMovieList(movieList: List<MovieItem>) {
-        mContentAdapter.mMovieList = movieList
+        runOnUiThread { mContentAdapter.setMovieList(movieList) }
+    }
+
+
+    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
+        Log.d(TAG, "dispatchKeyEvent() called with: event = [ ${event} ]")
+        return super.dispatchKeyEvent(event)
     }
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        Log.d(TAG, "onKeyDown() called with: keyCode = [ $keyCode ]")
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                menu_list.focusSearch(currentFocus, View.FOCUS_DOWN)?.requestFocus()
+                Log.d(TAG, "onKeyDown: key down")
+                if (mMenuAdapter.showHighLight) {
+                    mMenuAdapter.selected = mMenuAdapter.selected + 1
+                }
             }
 
             KeyEvent.KEYCODE_DPAD_UP -> {
-                menu_list.focusSearch(currentFocus, View.FOCUS_UP)?.requestFocus()
+                Log.d(TAG, "onKeyDown: key up")
+                if (mMenuAdapter.showHighLight) {
+                    mMenuAdapter.selected = mMenuAdapter.selected - 1
+                }
             }
 
             KeyEvent.KEYCODE_DPAD_LEFT -> {
@@ -76,15 +88,17 @@ class MainActivity : BaseActivity(), MainContract.View {
 
             }
 
+            KeyEvent.KEYCODE_BACK -> {
+                Log.d(TAG, "onKeyDown: on back click")
+                finish()
+            }
         }
 
-
-        return true
+        return super.onKeyDown(keyCode, event)
     }
 
 
     override fun showMenuList(cnameList: List<String>) {
-        mMenuAdapter.requestFocustOnFirst = true
-        mMenuAdapter.mCnameList = cnameList
+        mMenuAdapter.cnameList = cnameList
     }
 }

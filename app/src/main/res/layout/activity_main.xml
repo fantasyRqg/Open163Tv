@@ -6,16 +6,19 @@
     android:fitsSystemWindows="true"
     android:orientation="horizontal"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/menu_list"
         android:layout_width="150dp"
+        android:focusable="false"
         android:layout_height="match_parent" />
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/content_list"
+        android:focusable="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

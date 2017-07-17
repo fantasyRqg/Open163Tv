@@ -1,6 +1,7 @@
 package rqg.fantasy.open163.tv.business.main
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,19 +15,17 @@ import rqg.fantasy.open163.tv.model.MovieItem
 
 
 class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
-    var mMovieList: List<MovieItem> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    val TAG = "ContentAdapter"
+
+    var mMovieList: List<MovieItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ContentHodler {
-        var view = LayoutInflater.from(parent?.context).inflate(R.layout.item_movie, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_movie, parent, false)
         return ContentHodler(view)
     }
 
     override fun onBindViewHolder(holder: ContentHodler?, position: Int) {
-        var movie = mMovieList[position]
+        val movie = mMovieList[position]
 
         holder?.movieCover?.setImageURI(movie.imgpath)
         holder?.movieTitle?.text = movie.title
@@ -34,6 +33,13 @@ class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
 
     override fun getItemCount(): Int {
         return mMovieList.size
+    }
+
+
+    fun setMovieList(mList: List<MovieItem>) {
+        Log.d(TAG, "setMovieList() called with: mList = [ ${mList.size} ]")
+        mMovieList = mList
+        notifyDataSetChanged()
     }
 
 

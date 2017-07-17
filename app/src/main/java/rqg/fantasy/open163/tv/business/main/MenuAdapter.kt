@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import kotlinx.android.synthetic.main.item_play_menu.view.*
 import rqg.fantasy.open163.tv.R
 
@@ -13,13 +14,32 @@ import rqg.fantasy.open163.tv.R
 
 
 class MenuAdapter(inline val menuClick: (String) -> Unit) : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
-    var mCnameList: List<String> = listOf()
+    val TAG = "MenuAdapter"
+
+    var cnameList: List<String> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    var requestFocustOnFirst = false
+    var selected: Int = 0
+        set(value) {
+            if (value < 0 || value >= itemCount)
+                return
+
+            if (value != field) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
+
+    var showHighLight = false
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MenuHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_play_menu, parent, false)
@@ -28,21 +48,26 @@ class MenuAdapter(inline val menuClick: (String) -> Unit) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: MenuHolder?, position: Int) {
-        holder?.cnameView?.text = mCnameList[position]
-        holder?.cnameView?.setOnClickListener {
-            holder.cnameView?.text?.let {
-                menuClick.invoke(it.toString())
+        holder?.cnameView?.text = cnameList[position]
+
+
+        if (showHighLight) {
+            holder?.cnameView?.let {
+                if (position == selected) {
+                    it.setBackgroundResource(R.drawable.round_stroke_white_bg)
+                    if (it is TextView) {
+                        menuClick.invoke(it.text.toString())
+                    }
+                } else {
+                    it.setBackgroundResource(R.drawable.transparent_bg)
+                }
             }
-        }
-
-
-        if (position == 0 && requestFocustOnFirst) {
-            holder?.itemView?.requestFocus()
         }
     }
 
+
     override fun getItemCount(): Int {
-        return mCnameList.size
+        return cnameList.size
     }
 
 
