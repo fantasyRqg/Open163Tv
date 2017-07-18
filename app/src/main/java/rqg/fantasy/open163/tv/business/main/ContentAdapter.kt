@@ -19,6 +19,25 @@ class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
 
     var mMovieList: List<MovieItem> = mutableListOf()
 
+    var selected: Int = 0
+        set(value) {
+            if (value < 0 || value >= itemCount)
+                return
+
+            if (value != field) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
+
+    var showHighLight = false
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ContentHodler {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_movie, parent, false)
         return ContentHodler(view)
@@ -29,6 +48,14 @@ class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
 
         holder?.movieCover?.setImageURI(movie.imgpath)
         holder?.movieTitle?.text = movie.title
+
+        holder?.itemView?.let {
+            if (position == selected && showHighLight) {
+                it.setBackgroundResource(R.drawable.round_stroke_white_bg)
+            } else {
+                it.setBackgroundResource(R.drawable.transparent_bg)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

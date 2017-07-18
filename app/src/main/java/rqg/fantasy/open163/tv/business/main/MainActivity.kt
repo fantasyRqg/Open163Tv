@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.KeyEvent
+import android.view.SoundEffectConstants
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import rqg.fantasy.open163.tv.App
@@ -18,7 +19,11 @@ import javax.inject.Inject
  */
 
 class MainActivity : BaseActivity(), MainContract.View {
-    val TAG = "MainActivity"
+    private companion object {
+        const val CONTENT_ROW_SPACE = 4
+        const val TAG = "MainActivity"
+    }
+
 
     lateinit var mMenuAdapter: MenuAdapter
     lateinit var mContentAdapter: ContentAdapter
@@ -44,10 +49,11 @@ class MainActivity : BaseActivity(), MainContract.View {
         menu_list.adapter = mMenuAdapter
         menu_list.layoutManager = LinearLayoutManager(this)
         menu_list.setHasFixedSize(true)
+        menu_list.requestFocus()
 
 
         content_list.adapter = mContentAdapter
-        content_list.layoutManager = GridLayoutManager(this, 4)
+        content_list.layoutManager = GridLayoutManager(this, CONTENT_ROW_SPACE)
         content_list.setHasFixedSize(true)
 
         mMenuAdapter.showHighLight = true
@@ -65,36 +71,67 @@ class MainActivity : BaseActivity(), MainContract.View {
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        menu_list.playSoundEffect(SoundEffectConstants.CLICK)
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                Log.d(TAG, "onKeyDown: key down")
                 if (mMenuAdapter.showHighLight) {
                     mMenuAdapter.selected = mMenuAdapter.selected + 1
+                    mPresenter.loadTypeContent(mMenuAdapter.cnameList[mMenuAdapter.selected])
+                } else {
+                    mContentAdapter.selected += CONTENT_ROW_SPACE
+                    content_list.smoothScrollToPosition(mContentAdapter.selected)
                 }
+                return true
             }
 
             KeyEvent.KEYCODE_DPAD_UP -> {
-                Log.d(TAG, "onKeyDown: key up")
                 if (mMenuAdapter.showHighLight) {
                     mMenuAdapter.selected = mMenuAdapter.selected - 1
+                    mPresenter.loadTypeContent(mMenuAdapter.cnameList[mMenuAdapter.selected])
+                } else {
+                    mContentAdapter.selected -= CONTENT_ROW_SPACE
+                    content_list.smoothScrollToPosition(mContentAdapter.selected)
                 }
+
+                return true
             }
 
             KeyEvent.KEYCODE_DPAD_LEFT -> {
-
+                if (mContentAdapter.showHighLight) {
+                    if (mContentAdapter.selected % CONTENT_ROW_SPACE == 0) {
+                        mContentAdapter.showHighLight = false
+                        mMenuAdapter.showHighLight = true
+                    } else {
+                        mContentAdapter.selected -= 1
+                        content_list.smoothScrollToPosition(mContentAdapter.selected)
+                    }
+                }
+                return true
             }
 
             KeyEvent.KEYCODE_DPAD_RIGHT -> {
-
+                if (mMenuAdapter.showHighLight) {
+                    mMenuAdapter.showHighLight = false
+                    mContentAdapter.showHighLight = true
+                    mContentAdapter.selected = 0
+                    content_list.scrollToPosition(0)
+                } else {
+                    mContentAdapter.selected += 1
+                    content_list.smoothScrollToPosition(mContentAdapter.selected)
+                }
+                return true
             }
 
             KeyEvent.KEYCODE_BACK -> {
                 Log.d(TAG, "onKeyDown: on back click")
                 finish()
+                return true
+            }
+
+            else -> {
+                return super.onKeyDown(keyCode, event)
             }
         }
-
-        return super.onKeyDown(keyCode, event)
     }
 
 

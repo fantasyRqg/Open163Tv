@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import kotlinx.android.synthetic.main.item_play_menu.view.*
 import rqg.fantasy.open163.tv.R
 
@@ -51,17 +50,13 @@ class MenuAdapter(inline val menuClick: (String) -> Unit) : RecyclerView.Adapter
         holder?.cnameView?.text = cnameList[position]
 
 
-        if (showHighLight) {
-            holder?.cnameView?.let {
-                if (position == selected) {
-                    it.setBackgroundResource(R.drawable.round_stroke_white_bg)
-                    if (it is TextView) {
-                        menuClick.invoke(it.text.toString())
-                    }
-                } else {
-                    it.setBackgroundResource(R.drawable.transparent_bg)
-                }
+        holder?.cnameView?.let {
+            if (position == selected && showHighLight) {
+                it.setBackgroundResource(R.drawable.round_stroke_white_bg)
+            } else {
+                it.setBackgroundResource(R.drawable.transparent_bg)
             }
+
         }
     }
 
