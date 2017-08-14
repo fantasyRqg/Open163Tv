@@ -122,6 +122,15 @@ class MainActivity : BaseActivity(), MainContract.View {
                 return true
             }
 
+            KeyEvent.KEYCODE_DPAD_CENTER -> {
+                if (mContentAdapter.showHighLight) {
+                    val course = mContentAdapter.mMovieList.get(mContentAdapter.selected)
+
+                    Log.d(TAG, "onKeyDown: " + course)
+                }
+                return true
+            }
+
             KeyEvent.KEYCODE_BACK -> {
                 Log.d(TAG, "onKeyDown: on back click")
                 finish()

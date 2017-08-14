@@ -42,6 +42,8 @@ dependencies {
     implementation('com.google.dagger:dagger-android-support:2.11') {
         exclude group: 'com.android.support'
     }
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
     kapt 'com.google.dagger:dagger-compiler:2.11'
     kapt 'com.google.dagger:dagger-android-processor:2.11'
 
