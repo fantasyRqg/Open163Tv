@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Open163Tv</string>
+    <string name="course_time_len">%1$d 分钟</string>
+    <string name="course_title">[第%1$d集]%2$s</string>
 </resources>

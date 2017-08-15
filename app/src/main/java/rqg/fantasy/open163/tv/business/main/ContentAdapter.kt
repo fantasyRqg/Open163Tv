@@ -14,7 +14,7 @@ import rqg.fantasy.open163.tv.model.MovieItem
  */
 
 
-class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
+class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHolder>() {
     val TAG = "ContentAdapter"
 
     var mMovieList: List<MovieItem> = mutableListOf()
@@ -38,12 +38,12 @@ class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
             }
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ContentHodler {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ContentHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_movie, parent, false)
-        return ContentHodler(view)
+        return ContentHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ContentHodler?, position: Int) {
+    override fun onBindViewHolder(holder: ContentHolder?, position: Int) {
         val movie = mMovieList[position]
 
         holder?.movieCover?.setImageURI(movie.imgpath)
@@ -70,7 +70,7 @@ class ContentAdapter : RecyclerView.Adapter<ContentAdapter.ContentHodler>() {
     }
 
 
-    class ContentHodler(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieCover = itemView.movie_cover
         val movieTitle = itemView.movie_title
     }

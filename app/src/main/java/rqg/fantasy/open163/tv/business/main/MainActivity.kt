@@ -1,5 +1,6 @@
 package rqg.fantasy.open163.tv.business.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import rqg.fantasy.open163.tv.App
 import rqg.fantasy.open163.tv.BaseActivity
 import rqg.fantasy.open163.tv.R
+import rqg.fantasy.open163.tv.business.course.CourseActivity
 import rqg.fantasy.open163.tv.model.MovieItem
 import javax.inject.Inject
 
@@ -62,13 +64,6 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun showMovieList(movieList: List<MovieItem>) {
         runOnUiThread { mContentAdapter.setMovieList(movieList) }
     }
-
-
-    override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
-        Log.d(TAG, "dispatchKeyEvent() called with: event = [ ${event} ]")
-        return super.dispatchKeyEvent(event)
-    }
-
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         menu_list.playSoundEffect(SoundEffectConstants.CLICK)
@@ -126,7 +121,9 @@ class MainActivity : BaseActivity(), MainContract.View {
                 if (mContentAdapter.showHighLight) {
                     val course = mContentAdapter.mMovieList.get(mContentAdapter.selected)
 
-                    Log.d(TAG, "onKeyDown: " + course)
+                    val intent = Intent(this, CourseActivity::class.java)
+                    intent.putExtra("course", course)
+                    startActivity(intent)
                 }
                 return true
             }
