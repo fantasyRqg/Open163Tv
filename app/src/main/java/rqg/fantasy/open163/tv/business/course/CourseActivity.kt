@@ -1,5 +1,6 @@
 package rqg.fantasy.open163.tv.business.course
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -8,6 +9,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_course.*
 import rqg.fantasy.open163.tv.BaseActivity
 import rqg.fantasy.open163.tv.R
+import rqg.fantasy.open163.tv.business.play.PlayActivity
 import rqg.fantasy.open163.tv.model.MovieItem
 import javax.inject.Inject
 
@@ -53,7 +55,6 @@ class CourseActivity : BaseActivity(), CourseContract.View {
         courseData.videoList?.let {
             adapter.playItemList = it.requireNoNulls()
             adapter.notifyDataSetChanged()
-
         }
         Log.d(TAG, "updateCourseInfoUi: " + courseData.videoList)
     }
@@ -62,7 +63,9 @@ class CourseActivity : BaseActivity(), CourseContract.View {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_CENTER -> {
-                Log.d(TAG, "onKeyDown: " + adapter.playItemList[adapter.selectIndex])
+                val activityIntent = Intent(this, PlayActivity::class.java)
+                activityIntent.putExtra("video_url", adapter.playItemList[adapter.selectIndex].repovideourlmp4)
+                startActivity(activityIntent)
                 return true
             }
 

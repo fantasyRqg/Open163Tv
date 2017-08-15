@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".business.course.CourseActivity" />
+        <activity android:name=".business.play.PlayActivity" />
 
         <!--<activity-->
         <!--android:name=".MainActivity"-->
