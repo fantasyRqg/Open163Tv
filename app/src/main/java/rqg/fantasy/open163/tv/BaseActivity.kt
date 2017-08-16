@@ -1,7 +1,7 @@
 package rqg.fantasy.open163.tv
 
-import android.app.Activity
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
  */
 
 
-abstract class BaseActivity : Activity() {
+abstract class BaseActivity : FragmentActivity() {
     protected lateinit var mCompositeDisposable: CompositeDisposable
 
 

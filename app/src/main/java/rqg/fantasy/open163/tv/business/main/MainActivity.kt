@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.KeyEvent
 import android.view.SoundEffectConstants
+import com.wyt.searchbox.SearchFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import rqg.fantasy.open163.tv.App
@@ -42,9 +43,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     private fun initView() {
-        mMenuAdapter = MenuAdapter {
-            mPresenter.loadTypeContent(it)
-        }
+        mMenuAdapter = MenuAdapter()
         mContentAdapter = ContentAdapter()
 
 
@@ -82,7 +81,11 @@ class MainActivity : BaseActivity(), MainContract.View {
             KeyEvent.KEYCODE_DPAD_UP -> {
                 if (mMenuAdapter.showHighLight) {
                     mMenuAdapter.selected = mMenuAdapter.selected - 1
-                    mPresenter.loadTypeContent(mMenuAdapter.cnameList[mMenuAdapter.selected])
+                    if (mMenuAdapter.selected == 0) {
+                        showSearchFragment()
+                    } else {
+                        mPresenter.loadTypeContent(mMenuAdapter.cnameList[mMenuAdapter.selected])
+                    }
                 } else {
                     mContentAdapter.selected -= CONTENT_ROW_SPACE
                     content_list.smoothScrollToPosition(mContentAdapter.selected)
@@ -124,6 +127,8 @@ class MainActivity : BaseActivity(), MainContract.View {
                     val intent = Intent(this, CourseActivity::class.java)
                     intent.putExtra("course", course)
                     startActivity(intent)
+                } else if (mMenuAdapter.selected == 0) {
+                    showSearchFragment()
                 }
                 return true
             }
@@ -138,6 +143,15 @@ class MainActivity : BaseActivity(), MainContract.View {
                 return super.onKeyDown(keyCode, event)
             }
         }
+    }
+
+    private fun showSearchFragment() {
+        val searchFragment = SearchFragment.newInstance()
+        searchFragment.setOnSearchClickListener {
+            Log.d(TAG, "showSearchFragment: $it")
+        }
+
+        searchFragment.show(supportFragmentManager, "search")
     }
 
 

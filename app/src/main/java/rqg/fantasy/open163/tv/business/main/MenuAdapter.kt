@@ -11,8 +11,8 @@ import rqg.fantasy.open163.tv.R
  * Created by rqg on 02/07/2017.
  */
 
-
-class MenuAdapter(inline val menuClick: (String) -> Unit) : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
+//inline val menuClick: (String,Int) -> Unit
+class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
     val TAG = "MenuAdapter"
 
     var cnameList: List<String> = listOf()

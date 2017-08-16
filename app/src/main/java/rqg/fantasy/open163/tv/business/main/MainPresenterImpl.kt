@@ -34,8 +34,7 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
                                 var types = it.type?.split(",")
 
                                 types?.requireNoNulls()
-                                        ?.forEach {
-                                            key ->
+                                        ?.forEach { key ->
                                             if (playTable.containsKey(key)) {
                                                 playTable[key]?.add(it)
                                             } else {
@@ -51,8 +50,9 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     mPlayTable = it
-
-                    mView.showMenuList(mPlayTable.keys.toList())
+                    val cnameList = mPlayTable.keys.toMutableList()
+                    cnameList.add(0, String(byteArrayOf(0xF0.toByte(), 0x9F.toByte(), 0x94.toByte(), 0x8D.toByte())))
+                    mView.showMenuList(cnameList.toList())
                     mPlayTable.keys.first().let {
                         loadTypeContent(it)
                     }

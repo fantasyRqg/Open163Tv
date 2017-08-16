@@ -1,0 +1,3 @@
+[submodule "SearchDialog"]
+	path = SearchDialog
+	url = git@github.com:fantasyRqg/SearchDialog.git
