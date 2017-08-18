@@ -15,9 +15,8 @@ import javax.inject.Inject
 
 @ActivityScope
 class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val open163Api: Open163Api) : MainContract.Presenter {
-
-
     val TAG = "MainPresenterImpl"
+
 
     private lateinit var mPlayTable: Map<String, MutableList<MovieItem>>
 
@@ -57,6 +56,10 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
                         loadTypeContent(it)
                     }
                 }
+    }
+
+    override fun getCourseData(): Map<String, MutableList<MovieItem>> {
+        return mPlayTable
     }
 
     override fun loadTypeContent(key: String) {

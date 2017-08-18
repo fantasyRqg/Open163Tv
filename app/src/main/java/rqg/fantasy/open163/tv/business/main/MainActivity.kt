@@ -145,7 +145,15 @@ class MainActivity : BaseActivity(), MainContract.View {
         }
     }
 
+    public fun getCourseData() = mPresenter.getCourseData()
+
     private fun showSearchFragment() {
+//        val searchFrament = MySearchFragment()
+//
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.search_panel, searchFrament)
+//                .commit()
+
         val searchFragment = SearchFragment.newInstance()
         searchFragment.setOnSearchClickListener {
             Log.d(TAG, "showSearchFragment: $it")

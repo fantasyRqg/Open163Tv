@@ -15,7 +15,7 @@ interface MainContract {
 
         fun search(word: String)
 
-
+        fun getCourseData(): Map<String, MutableList<MovieItem>>
     }
 
 
