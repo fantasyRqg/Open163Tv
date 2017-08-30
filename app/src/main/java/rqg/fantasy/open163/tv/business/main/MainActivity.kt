@@ -148,7 +148,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     private fun showSearchFragment() {
         val searchFragment = SearchFragment.newInstance()
         searchFragment.setOnSearchClickListener {
-            Log.d(TAG, "showSearchFragment: $it")
+            mPresenter.search(it)
         }
 
         searchFragment.show(supportFragmentManager, "search")
@@ -157,5 +157,9 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun showMenuList(cnameList: List<String>) {
         mMenuAdapter.cnameList = cnameList
+
+        mMenuAdapter.showHighLight = true
+        mMenuAdapter.selected = 1
+        mPresenter.loadTypeContent(mMenuAdapter.cnameList[1])
     }
 }

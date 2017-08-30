@@ -53,9 +53,9 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
                     val cnameList = mPlayTable.keys.toMutableList()
                     cnameList.add(0, String(byteArrayOf(0xF0.toByte(), 0x9F.toByte(), 0x94.toByte(), 0x8D.toByte())))
                     mView.showMenuList(cnameList.toList())
-                    mPlayTable.keys.first().let {
-                        loadTypeContent(it)
-                    }
+//                    mPlayTable.keys.toList()[1].let {
+//                        loadTypeContent(it)
+//                    }
                 }
     }
 
@@ -68,6 +68,18 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
     }
 
     override fun search(word: String) {
+        val searchList: MutableList<MovieItem> = mutableListOf()
 
+        for (miList in mPlayTable.values) {
+            for (mi in miList) {
+                mi.title?.let {
+                    if (it.contains(word)) {
+                        searchList.add(mi)
+                    }
+                }
+            }
+        }
+
+        mView.showMovieList(searchList)
     }
 }
