@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.exoplayer2.ui.SimpleExoPlayerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/player_view"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</com.google.android.exoplayer2.ui.SimpleExoPlayerView>
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/player_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/speed_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#3C000000"
+        android:paddingBottom="6dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="6dp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="48sp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

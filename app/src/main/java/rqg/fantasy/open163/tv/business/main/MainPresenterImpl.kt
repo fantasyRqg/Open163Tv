@@ -28,8 +28,7 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
                 .map {
                     val playTable: MutableMap<String, MutableList<MovieItem>> = mutableMapOf()
 
-                    it
-                            .requireNoNulls()
+                    it.requireNoNulls()
                             .forEach {
                                 var types = it.type?.split(",")
 
@@ -48,7 +47,7 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
                     return@map playTable
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe({
                     mPlayTable = it
                     val cnameList = mPlayTable.keys.toMutableList()
                     cnameList.add(0, String(byteArrayOf(0xF0.toByte(), 0x9F.toByte(), 0x94.toByte(), 0x8D.toByte())))
@@ -56,7 +55,9 @@ class MainPresenterImpl @Inject constructor(val mView: MainContract.View, val op
 //                    mPlayTable.keys.toList()[1].let {
 //                        loadTypeContent(it)
 //                    }
-                }
+                }, {
+                    Log.e(TAG, "start: ", it)
+                })
     }
 
     override fun loadTypeContent(key: String) {

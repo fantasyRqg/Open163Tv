@@ -7,7 +7,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "rqg.fantasy.open163.tv"
         minSdkVersion 21
@@ -15,8 +15,24 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword '12345678'
+            storeFile file('../KeyStore')
+            storePassword '12345678'
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
+            // 移除无用的resource文件
+            shrinkResources false
+            //Zipalign优化
+            zipAlignEnabled true
+            //混淆
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
