@@ -4,12 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.KeyEvent
-import android.view.SoundEffectConstants
+import android.view.*
 import com.wyt.searchbox.SearchFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_play_menu.view.*
 import rqg.fantasy.open163.tv.App
 import rqg.fantasy.open163.tv.BaseActivity
 import rqg.fantasy.open163.tv.R
@@ -28,7 +29,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
 
-    lateinit var mMenuAdapter: MenuAdapter
+    private lateinit var mMenuAdapter: MenuAdapter
     lateinit var mContentAdapter: ContentAdapter
     @Inject lateinit var mPresenter: MainContract.Presenter
     @Inject lateinit var mApp: App
@@ -61,7 +62,9 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun showMovieList(movieList: List<MovieItem>) {
-        runOnUiThread { mContentAdapter.setMovieList(movieList) }
+        runOnUiThread {
+            mContentAdapter.setMovieList(movieList)
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -161,5 +164,64 @@ class MainActivity : BaseActivity(), MainContract.View {
         mMenuAdapter.showHighLight = true
         mMenuAdapter.selected = 1
         mPresenter.loadTypeContent(mMenuAdapter.cnameList[1])
+    }
+}
+
+private class MenuAdapter : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
+    val TAG = "MenuAdapter"
+
+    var cnameList: List<String> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var selected: Int = 0
+        set(value) {
+            if (value < 0 || value >= itemCount)
+                return
+
+            if (value != field) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
+
+    var showHighLight = false
+        set(value) {
+            if (value != field) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
+
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MenuHolder {
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_play_menu, parent, false)
+
+        return MenuHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: MenuHolder?, position: Int) {
+        holder?.cnameView?.text = cnameList[position]
+
+
+        holder?.cnameView?.let {
+            if (position == selected && showHighLight) {
+                it.setBackgroundResource(R.drawable.round_stroke_white_bg)
+            } else {
+                it.setBackgroundResource(R.drawable.transparent_bg)
+            }
+
+        }
+    }
+
+
+    override fun getItemCount(): Int {
+        return cnameList.size
+    }
+
+
+    class MenuHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val cnameView = view.cname
     }
 }
