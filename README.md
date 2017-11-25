@@ -1,5 +1,5 @@
 # Open163Tv
-网易云课堂 TV 版
+网易公开课 TV 版
 
 ## feature：
 - search
